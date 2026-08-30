@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Analitika{% endblock %}
+{% block content %}
+<h2>📈 Analitika</h2>
+
+<div class="grid2">
+  <div>
+    <h3>👥 Foydalanuvchilar o‘sishi (30 kun)</h3>
+    <canvas id="growthChart" height="180"></canvas>
+  </div>
+  <div>
+    <h3>🟢 Kunlik faol foydalanuvchilar — DAU (30 kun)</h3>
+    <canvas id="dauChart" height="180"></canvas>
+  </div>
+</div>
+
+<div class="grid2" style="margin-top:24px">
+  <div>
+    <h3>🔎 Eng ko‘p qidirilgan so‘zlar</h3>
+    <table>
+      <tr><th>So‘rov</th><th>Necha marta</th></tr>
+      {% for s in searches %}
+      <tr><td>{{ s.query }}</td><td>{{ s.cnt }}</td></tr>
+      {% else %}
+      <tr><td colspan="2">Ma'lumot yo‘q</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div>
+    <h3>🔥 TOP-10 kitoblar</h3>
+    <table>
+      <tr><th>Kitob</th><th>Yuklab olishlar</th></tr>
+      {% for b in top %}
+      <tr><td>{{ b.title }}</td><td>{{ b.downloads }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% if duplicates %}
+<h3 style="margin-top:24px">⚠️ Dublikat kitoblar</h3>
+<table>
+  <tr><th>Nom</th><th>Muallif</th><th>Nechta</th><th>ID lar</th></tr>
+  {% for d in duplicates %}
+  <tr><td>{{ d.t }}</td><td>{{ d.a }}</td><td>{{ d.c }}</td><td>{{ d.ids }}</td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script>
+const growthData = {{ growth_json | safe }};
+const activeData = {{ active_json | safe }};
+
+function renderChart(canvasId, data, label, color) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.map(d => d.day),
+      datasets: [{
+        label: label,
+        data: data.map(d => d.cnt),
+        borderColor: color,
+        backgroundColor: color + '33',
+        tension: 0.3,
+        fill: true,
+      }]
+    },
+    options: {
+      plugins: { legend: { labels: { color: '#e8ecf5' } } },
+      scales: {
+        x: { ticks: { color: '#8b96b3' }, grid: { color: '#2a3550' } },
+        y: { ticks: { color: '#8b96b3' }, grid: { color: '#2a3550' }, beginAtZero: true }
+      }
+    }
+  });
+}
+renderChart('growthChart', growthData, 'Yangi foydalanuvchilar', '#5b8def');
+renderChart('dauChart', activeData, 'Faol foydalanuvchilar', '#3fd68a');
+</script>
+{% endblock %}
