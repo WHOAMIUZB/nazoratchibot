@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Kitoblar</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div id="header">
+    <button id="backBtn" onclick="goBack()" style="display:none">←</button>
+    <div id="headerTitle">📚 Kitoblar</div>
+  </div>
+
+  <div id="app"></div>
+
+  <nav id="bottomNav">
+    <button data-tab="home" onclick="navigate('home')"><span>🏠</span><small>Bosh sahifa</small></button>
+    <button data-tab="genres" onclick="navigate('genres')"><span>📁</span><small>Janrlar</small></button>
+    <button data-tab="favorites" onclick="navigate('favorites')"><span>⭐</span><small>Sevimli</small></button>
+    <button data-tab="library" onclick="navigate('library')"><span>📖</span><small>Kutubxonam</small></button>
+    <button data-tab="profile" onclick="navigate('profile')"><span>👤</span><small>Profil</small></button>
+  </nav>
+
+  <div id="toast"></div>
+  <div id="sheetOverlay" onclick="closeSheet()"></div>
+  <div id="sheet"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
