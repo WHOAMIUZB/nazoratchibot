@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Kitoblar{% endblock %}
+{% block content %}
+<div class="toolbar">
+  <h2 style="margin:0">📚 Kitoblar ({{ books|length }})</h2>
+  <div style="display:flex; gap:8px;">
+    <form method="get" action="/books">
+      <input type="text" name="q" placeholder="Qidirish..." value="{{ q }}">
+    </form>
+    <a class="btn" href="/books/new">➕ Yangi kitob</a>
+  </div>
+</div>
+
+<table>
+  <tr><th>ID</th><th>Nomi</th><th>Muallif</th><th>Yil</th><th>⬇️</th><th>⭐</th><th>Holat</th><th></th></tr>
+  {% for b in books %}
+  <tr>
+    <td>{{ b.book_id }}</td>
+    <td>{{ b.title }}</td>
+    <td>{{ b.author or "—" }}</td>
+    <td>{{ b.year or "—" }}</td>
+    <td>{{ b.downloads }}</td>
+    <td>{% if b.rating_count %}{{ "%.1f"|format(b.rating_sum / b.rating_count) }}{% else %}—{% endif %}</td>
+    <td>
+      {% if b.is_archived %}<span class="badge gray">Arxivlangan</span>{% endif %}
+      {% if b.is_premium %}<span class="badge green">Premium</span>{% endif %}
+      {% if b.full_text %}<span class="badge green">Onlayn matn bor</span>{% endif %}
+    </td>
+    <td style="white-space:nowrap">
+      <a class="btn small secondary" href="/books/{{ b.book_id }}/edit">✏️</a>
+      <a class="btn small secondary" href="/books/{{ b.book_id }}/settext">📄</a>
+      <form class="inline" method="post" action="/books/{{ b.book_id }}/archive">
+        <button class="btn small secondary" type="submit">🗄</button>
+      </form>
+      <form class="inline" method="post" action="/books/{{ b.book_id }}/delete" onsubmit="return confirm('Rostdan o‘chirilsinmi?');">
+        <button class="btn small danger" type="submit">🗑</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="8">Kitoblar topilmadi</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

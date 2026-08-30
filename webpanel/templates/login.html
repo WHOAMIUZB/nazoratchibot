@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kirish — Admin panel</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="login-wrap">
+    <h1>📚 Admin panel</h1>
+    {% if error %}<div class="error">❌ Login yoki parol noto‘g‘ri</div>{% endif %}
+    <form method="post" action="/login">
+      <label>Login</label>
+      <input type="text" name="username" required autofocus>
+      <label>Parol</label>
+      <input type="password" name="password" required>
+      <button class="btn" type="submit" style="width:100%">Kirish</button>
+    </form>
+  </div>
+</body>
+</html>

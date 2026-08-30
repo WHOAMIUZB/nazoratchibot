@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Xabar yuborish{% endblock %}
+{% block content %}
+<h2>📢 Barchaga xabar yuborish</h2>
+<p style="color:var(--muted)">Xabar botning barcha ({{ users }} ta) bloklanmagan foydalanuvchisiga yuboriladi.</p>
+
+{% if result %}
+<div class="alert">✅ Yuborildi: {{ result[0] }} ta &nbsp;|&nbsp; ❌ Xato: {{ result[1] }} ta</div>
+{% endif %}
+
+<form method="post" action="/broadcast" enctype="multipart/form-data" style="max-width:520px">
+  <label>Xabar matni</label>
+  <textarea name="text" required placeholder="Xabaringizni yozing..."></textarea>
+
+  <label>Rasm (ixtiyoriy)</label>
+  <input type="file" name="photo" accept="image/*">
+
+  <button class="btn" type="submit" onclick="return confirm('Barcha foydalanuvchilarga yuborilsinmi?');">📤 Yuborish</button>
+</form>
+{% endblock %}

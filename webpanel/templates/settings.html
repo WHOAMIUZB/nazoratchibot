@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Sozlamalar{% endblock %}
+{% block content %}
+<h2>⚙️ Tizim sozlamalari</h2>
+
+<form method="post" action="/settings" style="max-width:480px">
+  <label>Kitobxonlar klubi chat havolasi</label>
+  <input type="text" name="club_link" value="{{ club_link }}">
+
+  <label>Standart eslatma vaqti (soat, UTC, 0-23)</label>
+  <input type="number" name="reminder_hour" min="0" max="23" value="{{ reminder_hour }}">
+
+  <label>
+    <input type="checkbox" name="maintenance" value="1" style="width:auto" {% if maintenance == "1" %}checked{% endif %}>
+    🔧 Texnik tanaffus rejimi (botni vaqtincha yopish)
+  </label>
+
+  <button class="btn" type="submit" style="margin-top:12px">💾 Saqlash</button>
+</form>
+
+<div class="alert" style="margin-top:20px">
+  ℹ️ Texnik tanaffus rejimi yoqilganda, botdan admin bo‘lmagan barcha foydalanuvchilar
+  avtomatik ravishda "texnik tanaffus" xabarini oladi va boshqa buyruqlar ishlamaydi.
+  Bu sozlama saqlangach, darhol kuchga kiradi (botni qayta ishga tushirish shart emas).
+</div>
+{% endblock %}

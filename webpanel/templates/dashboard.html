@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>📊 Dashboard</h2>
+
+<div class="cards">
+  <div class="card"><div class="num">{{ users }}</div><div class="label">Jami foydalanuvchilar</div></div>
+  <div class="card"><div class="num">{{ new_today }}</div><div class="label">Bugun qo‘shilgan</div></div>
+  <div class="card"><div class="num">{{ books }}</div><div class="label">Jami kitoblar</div></div>
+</div>
+
+<div class="grid2">
+  <div>
+    <h3>🔥 TOP-5 yuklab olingan</h3>
+    <table>
+      <tr><th>Kitob</th><th>Yuklab olishlar</th></tr>
+      {% for b in top %}
+      <tr><td><a href="/books/{{ b.book_id }}/edit">{{ b.title }}</a></td><td>{{ b.downloads }}</td></tr>
+      {% else %}
+      <tr><td colspan="2">Hozircha ma'lumot yo‘q</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div>
+    <h3>💬 So‘nggi fikr-mulohazalar</h3>
+    <table>
+      <tr><th>Foydalanuvchi</th><th>Xabar</th></tr>
+      {% for f in feedback %}
+      <tr><td>{{ f.user_id }}</td><td>{{ f.text[:60] }}</td></tr>
+      {% else %}
+      <tr><td colspan="2">Fikr-mulohazalar yo‘q</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+{% if duplicates %}
+<h3 style="margin-top:24px">⚠️ Aniqlangan dublikat kitoblar</h3>
+<table>
+  <tr><th>Nom</th><th>Muallif</th><th>Nechta</th><th>ID lar</th></tr>
+  {% for d in duplicates %}
+  <tr><td>{{ d.t }}</td><td>{{ d.a }}</td><td>{{ d.c }}</td><td>{{ d.ids }}</td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

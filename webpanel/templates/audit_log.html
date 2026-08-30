@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Audit jurnali{% endblock %}
+{% block content %}
+<h2>🧾 Adminlar faoliyati jurnali</h2>
+<table>
+  <tr><th>Vaqt</th><th>Admin</th><th>Amal</th><th>Tafsilot</th></tr>
+  {% for l in logs %}
+  <tr>
+    <td>{{ l.ts[:19] }}</td>
+    <td>{{ l.admin_id }}</td>
+    <td>{{ l.action }}</td>
+    <td>{{ l.details }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="4">Hozircha yozuvlar yo‘q</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Viktorina{% endblock %}
+{% block content %}
+<h2>❓ Viktorina savollari</h2>
+
+<div class="grid2">
+  <div>
+    <table>
+      <tr><th>Savol</th><th>Kitob</th><th>To‘g‘ri</th><th></th></tr>
+      {% for q in questions %}
+      <tr>
+        <td>{{ q.question[:50] }}</td>
+        <td>{{ q.book_title or "Umumiy" }}</td>
+        <td>{{ q.correct_option|upper }}</td>
+        <td>
+          <form class="inline" method="post" action="/quiz/{{ q.id }}/delete" onsubmit="return confirm('O‘chirilsinmi?');">
+            <button class="btn small danger" type="submit">🗑</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">Savollar yo‘q</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div>
+    <h3>➕ Yangi savol</h3>
+    <form method="post" action="/quiz/new" style="max-width:400px">
+      <label>Kitob (ixtiyoriy)</label>
+      <select name="book_id">
+        <option value="">— Umumiy savol —</option>
+        {% for b in books %}
+        <option value="{{ b.book_id }}">{{ b.title }}</option>
+        {% endfor %}
+      </select>
+      <label>Savol matni</label>
+      <textarea name="question" required></textarea>
+      <label>Variant A</label>
+      <input type="text" name="option_a" required>
+      <label>Variant B</label>
+      <input type="text" name="option_b" required>
+      <label>Variant C (ixtiyoriy)</label>
+      <input type="text" name="option_c">
+      <label>Variant D (ixtiyoriy)</label>
+      <input type="text" name="option_d">
+      <label>To‘g‘ri javob</label>
+      <select name="correct">
+        <option value="a">A</option>
+        <option value="b">B</option>
+        <option value="c">C</option>
+        <option value="d">D</option>
+      </select>
+      <button class="btn" type="submit">Qo‘shish</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

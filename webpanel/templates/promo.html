@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Promo-kodlar{% endblock %}
+{% block content %}
+<h2>🎁 Promo-kodlar</h2>
+
+<div class="grid2">
+  <div>
+    <table>
+      <tr><th>Kod</th><th>XP</th><th>Qolgan</th><th>Yaratilgan</th></tr>
+      {% for p in promos %}
+      <tr>
+        <td><code>{{ p.code }}</code></td>
+        <td>{{ p.xp_reward }}</td>
+        <td>{{ p.uses_left }}</td>
+        <td>{{ p.created_at[:10] }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">Promo-kodlar yo‘q</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div>
+    <h3>➕ Yangi promo-kod</h3>
+    <form method="post" action="/promo/new" style="max-width:320px">
+      <label>Kod</label>
+      <input type="text" name="code" required placeholder="KITOB2026">
+      <label>XP miqdori</label>
+      <input type="number" name="xp_reward" required value="10">
+      <label>Nechta foydalanuvchi ishlata oladi</label>
+      <input type="number" name="uses" required value="100">
+      <button class="btn" type="submit">Yaratish</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

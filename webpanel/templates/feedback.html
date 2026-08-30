@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Fikr-mulohazalar{% endblock %}
+{% block content %}
+<h2>💬 Foydalanuvchilar fikr-mulohazalari</h2>
+<table>
+  <tr><th>Sana</th><th>Foydalanuvchi</th><th>Xabar</th><th>Holat</th><th></th></tr>
+  {% for f in items %}
+  <tr>
+    <td>{{ f.created_at[:16] }}</td>
+    <td><a href="/users/{{ f.user_id }}">{{ f.user_id }}</a></td>
+    <td>{{ f.text }}</td>
+    <td>{% if f.status == 'resolved' %}<span class="badge green">Hal qilindi</span>{% else %}<span class="badge gray">Yangi</span>{% endif %}</td>
+    <td>
+      {% if f.status != 'resolved' %}
+      <form method="post" action="/feedback/{{ f.id }}/resolve">
+        <button class="btn small secondary" type="submit">✅ Hal qilindi deb belgilash</button>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="5">Fikr-mulohazalar yo‘q</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

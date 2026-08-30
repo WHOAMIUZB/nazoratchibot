@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Onlayn o‘qish matni{% endblock %}
+{% block content %}
+<h2>📄 Onlayn o‘qish matni — {{ book.title }}</h2>
+<p style="color:var(--muted)">Bu yerga kiritilgan matn foydalanuvchilarga bot ichida sahifama-sahifa ko‘rsatiladi ("Onlayn o‘qish" tugmasi).</p>
+<form method="post" action="/books/{{ book.book_id }}/settext" style="max-width:700px">
+  <textarea name="full_text" style="min-height:400px">{{ book.full_text or '' }}</textarea>
+  <button class="btn" type="submit">💾 Saqlash</button>
+  <a class="btn secondary" href="/books">Bekor qilish</a>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Sharhlar{% endblock %}
+{% block content %}
+<h2>🌟 Kitob sharhlari</h2>
+<table>
+  <tr><th>Sana</th><th>Kitob</th><th>Foydalanuvchi</th><th>Baho</th><th>Izoh</th><th></th></tr>
+  {% for r in reviews %}
+  <tr>
+    <td>{{ r.created_at[:16] }}</td>
+    <td>{{ r.book_title }}</td>
+    <td>{{ r.first_name or r.user_id }}</td>
+    <td>{{ "⭐" * r.rating }}</td>
+    <td>{{ r.text or "—" }}</td>
+    <td>
+      <form method="post" action="/reviews/{{ r.review_id }}/delete" onsubmit="return confirm('O‘chirilsinmi?');">
+        <button class="btn small danger" type="submit">🗑</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="6">Sharhlar yo‘q</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

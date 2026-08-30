@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Foydalanuvchi #{{ user.user_id }}{% endblock %}
+{% block content %}
+<h2>👤 {{ user.first_name or "—" }} ({{ user.user_id }})</h2>
+
+<div class="grid2">
+  <div>
+    <table>
+      <tr><td>Username</td><td>{{ "@" + user.username if user.username else "—" }}</td></tr>
+      <tr><td>Til</td><td>{{ user.language }}</td></tr>
+      <tr><td>XP</td><td>{{ user.xp }}</td></tr>
+      <tr><td>Qo‘shilgan sana</td><td>{{ user.joined_at }}</td></tr>
+      <tr><td>Oxirgi faollik</td><td>{{ user.last_active }}</td></tr>
+      <tr><td>Holat</td><td>{% if user.is_blocked %}<span class="badge red">Bloklangan</span>{% else %}<span class="badge green">Faol</span>{% endif %}</td></tr>
+    </table>
+
+    <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap">
+      {% if user.is_blocked %}
+      <form method="post" action="/users/{{ user.user_id }}/unblock"><button class="btn">✅ Blokdan chiqarish</button></form>
+      {% else %}
+      <form method="post" action="/users/{{ user.user_id }}/block"><button class="btn danger">🚫 Bloklash</button></form>
+      {% endif %}
+    </div>
+
+    <h3 style="margin-top:20px">💎 XP ni o‘zgartirish</h3>
+    <form method="post" action="/users/{{ user.user_id }}/xp" style="max-width:260px; display:flex; gap:8px;">
+      <input type="number" name="xp" value="{{ user.xp }}">
+      <button class="btn" type="submit">Saqlash</button>
+    </form>
+
+    <h3 style="margin-top:20px">✉️ Shaxsiy xabar yuborish</h3>
+    <form method="post" action="/users/{{ user.user_id }}/message" style="max-width:400px">
+      <textarea name="text" placeholder="Xabar matni..." required></textarea>
+      <button class="btn" type="submit">Yuborish</button>
+    </form>
+  </div>
+
+  <div>
+    <h3>⭐ Sevimlilar ({{ favorites|length }})</h3>
+    <table>
+      {% for b in favorites %}
+      <tr><td>{{ b.title }}</td></tr>
+      {% else %}
+      <tr><td>Bo‘sh</td></tr>
+      {% endfor %}
+    </table>
+
+    <h3 style="margin-top:20px">🕘 So‘nggi faoliyat</h3>
+    <table>
+      {% for h in history %}
+      <tr><td>{{ h.ts[:16] }}</td><td>{{ h.action }}</td><td>{{ h.title or "" }}</td></tr>
+      {% else %}
+      <tr><td colspan="3">Tarix bo‘sh</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

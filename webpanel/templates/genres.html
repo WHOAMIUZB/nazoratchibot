@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Janrlar{% endblock %}
+{% block content %}
+<h2>📁 Janrlar</h2>
+
+<div class="grid2">
+  <div>
+    <h3>Mavjud janrlar</h3>
+    <table>
+      <tr><th>ID</th><th>Nomi (uz/ru/en)</th><th>Turi</th><th></th></tr>
+      {% for g in genres %}
+      <tr>
+        <td>{{ g.genre_id }}</td>
+        <td>{{ "— " if g.parent_id else "" }}{{ g.name_uz }} / {{ g.name_ru }} / {{ g.name_en }}</td>
+        <td>{% if g.parent_id %}Subjanr{% else %}Asosiy{% endif %}</td>
+        <td>
+          <form class="inline" method="post" action="/genres/{{ g.genre_id }}/delete" onsubmit="return confirm('O‘chirilsinmi? Bu janrdagi kitoblar \"janrsiz\" bo‘lib qoladi.');">
+            <button class="btn small danger" type="submit">🗑</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div>
+    <h3>➕ Yangi janr qo‘shish</h3>
+    <form method="post" action="/genres/new" style="max-width:360px">
+      <label>Nomi (o‘zbekcha)</label>
+      <input type="text" name="name_uz" required>
+      <label>Nomi (ruscha)</label>
+      <input type="text" name="name_ru">
+      <label>Nomi (inglizcha)</label>
+      <input type="text" name="name_en">
+      <label>Ota janr (agar subjanr bo‘lsa)</label>
+      <select name="parent_id">
+        <option value="">— Asosiy janr —</option>
+        {% for g in top_genres %}
+        <option value="{{ g.genre_id }}">{{ g.name_uz }}</option>
+        {% endfor %}
+      </select>
+      <button class="btn" type="submit">💾 Qo‘shish</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

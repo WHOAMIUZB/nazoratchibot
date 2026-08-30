@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{% if book %}Kitobni tahrirlash{% else %}Yangi kitob{% endif %}{% endblock %}
+{% block content %}
+<h2>{% if book %}✏️ Kitobni tahrirlash{% else %}➕ Yangi kitob qo‘shish{% endif %}</h2>
+
+<form method="post" action="{% if book %}/books/{{ book.book_id }}/edit{% else %}/books/new{% endif %}" enctype="multipart/form-data" style="max-width:520px">
+  <label>Nomi</label>
+  <input type="text" name="title" required value="{{ book.title if book else '' }}">
+
+  <label>Muallif</label>
+  <input type="text" name="author" value="{{ book.author if book else '' }}">
+
+  <label>Janr</label>
+  <select name="genre_id" required>
+    {% for g in genres %}
+    <option value="{{ g.genre_id }}" {% if book and book.genre_id==g.genre_id %}selected{% endif %}>
+      {{ "— " if g.parent_id else "" }}{{ g.name_uz }}
+    </option>
+    {% endfor %}
+  </select>
+
+  <label>Nashr yili</label>
+  <input type="number" name="year" value="{{ book.year if book else '' }}">
+
+  <label>Tavsif</label>
+  <textarea name="description">{{ book.description if book else '' }}</textarea>
+
+  <label>Kitob muqovasi (rasm){% if book and book.cover_file_id %} — mavjud, bo‘sh qoldirsangiz saqlanib qoladi{% endif %}</label>
+  <input type="file" name="cover" accept="image/*">
+
+  <label>
+    <input type="checkbox" name="is_premium" value="true" style="width:auto" {% if book and book.is_premium %}checked{% endif %}>
+    💎 Premium (pullik) kitob
+  </label>
+  <br>
+
+  <label>Kitob fayli (PDF/EPUB){% if book %} — bo‘sh qoldirsangiz eski fayl saqlanadi{% endif %}</label>
+  <input type="file" name="file" {% if not book %}required{% endif %}>
+
+  <button class="btn" type="submit" style="margin-top:10px">💾 Saqlash</button>
+  <a class="btn secondary" href="/books">Bekor qilish</a>
+</form>
+{% endblock %}

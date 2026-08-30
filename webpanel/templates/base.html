@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Admin panel{% endblock %} — Kitoblar bot</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h1>📚 Kitoblar bot</h1>
+    <nav>
+      <a href="/">📊 Dashboard</a>
+      <a href="/books">📚 Kitoblar</a>
+      <a href="/genres">📁 Janrlar</a>
+      <a href="/users">👥 Foydalanuvchilar</a>
+      <a href="/broadcast">📢 Xabar yuborish</a>
+      <a href="/promo">🎁 Promo-kodlar</a>
+      <a href="/quiz">❓ Viktorina</a>
+      <a href="/reviews">🌟 Sharhlar</a>
+      <a href="/feedback">💬 Fikr-mulohaza</a>
+      <a href="/analytics">📈 Analitika</a>
+      <a href="/settings">⚙️ Sozlamalar</a>
+      <a href="/audit-log">🧾 Audit jurnali</a>
+      <a href="/backup">💾 Backup yuklash</a>
+    </nav>
+    <a class="logout" href="/logout">🚪 Chiqish ({{ admin_username }})</a>
+  </div>
+  <div class="main">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
