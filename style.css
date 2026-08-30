@@ -1,0 +1,126 @@
+:root {
+  --bg: #0f1420;
+  --panel: #161d2e;
+  --panel2: #1d2740;
+  --border: #2a3550;
+  --text: #e8ecf5;
+  --muted: #8b96b3;
+  --accent: #5b8def;
+  --accent2: #3fd68a;
+  --danger: #ef5b6b;
+  --warning: #f0b83c;
+  --radius: 10px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.sidebar {
+  width: 230px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 20px 14px;
+  flex-shrink: 0;
+}
+.sidebar h1 {
+  font-size: 17px;
+  margin: 0 0 20px 6px;
+}
+.sidebar nav a {
+  display: block;
+  padding: 9px 10px;
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: var(--panel2);
+  text-decoration: none;
+}
+.sidebar .logout { margin-top: 20px; display: block; color: var(--danger); }
+
+.main { flex: 1; padding: 26px 32px; max-width: 1200px; }
+.main h2 { margin-top: 0; }
+
+.cards { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  min-width: 160px;
+  flex: 1;
+}
+.card .num { font-size: 28px; font-weight: 700; }
+.card .label { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: var(--radius); overflow: hidden; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+th { color: var(--muted); font-weight: 600; background: var(--panel2); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn:hover { opacity: 0.9; text-decoration: none; }
+.btn.danger { background: var(--danger); }
+.btn.secondary { background: var(--panel2); border: 1px solid var(--border); color: var(--text); }
+.btn.small { padding: 5px 10px; font-size: 12px; }
+
+form.inline { display: inline; }
+
+input[type=text], input[type=number], input[type=password], textarea, select {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+textarea { min-height: 120px; font-family: inherit; }
+label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 4px; }
+
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; }
+.toolbar form { display: flex; gap: 8px; }
+.toolbar input[type=text] { margin-bottom: 0; width: 260px; }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; }
+.badge.green { background: rgba(63,214,138,0.15); color: var(--accent2); }
+.badge.red { background: rgba(239,91,107,0.15); color: var(--danger); }
+.badge.gray { background: rgba(139,150,179,0.15); color: var(--muted); }
+
+.login-wrap {
+  margin: auto;
+  background: var(--panel);
+  padding: 36px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  width: 320px;
+}
+.login-wrap h1 { text-align: center; font-size: 18px; }
+.error { color: var(--danger); font-size: 13px; margin-bottom: 10px; }
+.alert { background: rgba(91,141,239,0.12); border: 1px solid var(--accent); padding: 12px 14px; border-radius: var(--radius); margin-bottom: 16px; font-size: 14px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+
+canvas { background: var(--panel); border-radius: var(--radius); padding: 12px; border: 1px solid var(--border); }
